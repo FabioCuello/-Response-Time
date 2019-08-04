@@ -1,0 +1,147 @@
+html,
+body {
+    height: 100%;
+
+}
+
+a {
+    padding: 10px;
+    margin: 3%;
+}
+
+body {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.form-signin {
+    width: 100%;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+    margin: 3% 0;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+
+.formpadding {
+    margin-top: 6.25rem;
+}
+
+.form-control {
+    padding: 5%;
+}
+
+span {
+    color: red;
+}
+
+/* ------------------ */
+.instruccionesParrafo {
+    text-align: left;
+}
+
+.circulo1 {
+    content: '';
+    margin: auto;
+    width: 30px;
+    height: 30px;
+    display: block;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+#juego {
+    width: 100%;
+    height: 80%;
+    background-color: #fff;
+
+
+}
+
+.esconder {
+    visibility: hidden;
+
+}
+
+.oculto {
+    display: none;
+}
+
+.custom {
+    max-width: 330px;
+    margin: auto;
+}
+
+.contenedorJuego {
+    height: 100vh;
+    max-width: none;
+    margin: auto;
+    background-color: black;
+    padding-bottom: 40%;
+}
+
+.aviso {
+    display: inline-block;
+    opacity: 0.3;
+    position: relative;
+    top: 40vh;
+    background: black;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    font-weight: normal;
+    color: rgb(255, 255, 255, 1);
+    text-align: center;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.hideDisplay {
+    visibility: hidden;
+}
+
+#circulo {
+
+    margin: auto;
+    margin-top: 15vh;
+    /* 45 80 */
+    width: 330px;
+    height: 70vh;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.bye {
+    padding: 15rem 15rem;
+}
+
+h2 {
+    padding-top: 8vh;
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: gray;
+}
+
+table {
+    width: 100%;
+    border: 1px solid black
+}
