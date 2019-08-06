@@ -129,6 +129,7 @@ function Final() {
 // --------------------------------------------------------------------------------------------------------------------------------
 // Columna Vertebral del codigo
 $("a").click(checkea);
+document.querySelector("a").addEventListener("touchstart", checkea);
 
 function checkea() {
     const nombre = {
@@ -209,6 +210,37 @@ function empieza() {
 
             };
         });
+        // ----------------eventos de click------
+        document.addEventListener("touchstart", function (event) {
+            console.log('AddEventListener------------------------------------');
+            listening = true;
+            if (app.color == colorChoose) {
+                console.log("Correcto")
+                colorCorrecto = true;
+                // cases = 1;
+            } else if (app.color !== colorChoose) {
+                if (app.color == "black") {
+                    anticipos = true;
+                    console.log("Anticipa")
+                } else {
+                    console.log("Incorrecto")
+                    colorCorrecto = false;
+                    // cases = 2;
+                };
+            };
+            if (colorCorrecto == true) {
+                var deltaT1 = objeto.GetLastTime("miliseconds");
+                loopRespuestasArray.push(deltaT1);
+                return true;
+            } else if (colorCorrecto == false) {
+                loopRespuestasinCorrectas.push(1);
+                return true;
+            }
+            if (anticipos == true) {
+                return true;
+            };
+        });
+        // ----------------------------------------
         document.addEventListener("keyup", function (event) {
             if (aviso == true) {
                 $(".aviso").addClass("hideDisplay");
