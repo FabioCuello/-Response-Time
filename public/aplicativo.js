@@ -11,17 +11,11 @@ console.log('Probabilidad del verde:' + probabilidadVerde + "\n" +
     "Color Valido: " + colorValido + "\n" + "Nombre de prueba: " + NombrePrueba);
 let tiempoDeRespuestasArray = [];
 let loopRespuestasArray = [];
-let loopRespuestasCorrectas = [];
 let loopRespuestasinCorrectas = [];
 let loopRespuestasOmitidasCorrectas = [];
 let loopRespuestasOmitidasIncorrectas = [];
-let respuestasOmitidasCorrectas = [];
-let respuestasOmitidasinCorrectas = [];
-let respuestasCorrestas = [];
 let respuestasinCorrectas = [];
-let loopRespuestasAnticipadas = [];
 let RespuestasAnticipadas = [];
-let ColorNegro = '';
 let colorChoose = '';
 let estadoNegro = false;
 let estadoColor = false;
@@ -38,7 +32,6 @@ let Nombre = "";
 let Edad = "";
 let GSanguineo = "";
 let Apellido = "";
-
 // --------------------------------------------------------------------------------------------------------------------
 var listaverde = [...Array(probabilidadVerde).keys()];
 if (colorValido == "verde") {
@@ -46,12 +39,6 @@ if (colorValido == "verde") {
 } else if (colorValido == "rojo") {
     colorChoose = "red";
 };
-
-
-var caseFB = 0;
-// --------------------------------------------------------------------------------------------------------------------
-let errorA = 0
-let errorB = 0
 // --------------------------------------------------------------------------------------------------------------------
 class times {
     ta = 0;
@@ -73,7 +60,6 @@ class times {
             console.log("Invalid input");
         }
     }
-
 }
 var objeto = new times();
 // -----------------------------------------
@@ -125,8 +111,6 @@ function Final() {
     app.cambiarNegroFinal();
     return true;
 }
-
-
 // --------------------------------------------------------------------------------------------------------------------------------
 // Columna Vertebral del codigo
 $("a").click(checkea);
@@ -172,7 +156,6 @@ function empieza() {
         alert("Ops, faltan los siguientes campos: " + campos)
         campos = [];
         chekeo = 0;
-
     } else {
         // ----------------------------------------------------------------------------------------------------------------------------------
         document.addEventListener("keydown", function (event) {
@@ -235,7 +218,6 @@ function empieza() {
                     } else {
                         console.log("Incorrecto")
                         colorCorrecto = false;
-                        // cases = 2;
                     };
                 };
                 if (colorCorrecto == true) {
@@ -254,7 +236,6 @@ function empieza() {
         document.addEventListener("touchend", function (event) {
             console.log('touchend')
             touchend = true;
-            // touchdown = false;
         });
         // ----------------------------------------------------------------------------------------------------------------------------------
         $(".contenedorJuego").removeClass("oculto")
@@ -328,8 +309,7 @@ function empieza() {
                     nombrePrueba: NombrePrueba
                 };
                 xhttp.send(JSON.stringify(datos));
-                // Comentar en caso de prueba
-                // $("#bot").trigger('click');
+                $("#bot").trigger('click');
                 console.log('sending')
                 return true;
             };
@@ -342,24 +322,3 @@ function empieza() {
         }, tiempoDeFondo + tiempoDeImg);
     }
 }
-
-
-
-
-
-
-
-
-
-
-// // -------------------------------------enviar informacion----------------------------------------------
-// var xhttp = new XMLHttpRequest();
-// xhttp.open("POST", '/');
-// xhttp.setRequestHeader("Content-type", 'application/json');
-// var probado = {
-//     name: "John",
-//     age: 30
-// };
-// xhttp.send(JSON.stringify(probado));
-// alert(JSON.stringify(probado))
-// // https://stackoverflow.com/questions/54104306/how-to-pass-data-from-client-side-javascript-to-node-js-using-xmlhttprequest
