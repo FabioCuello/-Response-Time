@@ -157,7 +157,8 @@ function empieza() {
         campos = [];
         chekeo = 0;
     } else {
-        $(".contenedorJuego").removeClass("oculto")
+        $(".custom").addClass("oculto");
+        $(".contenedorJuego").removeClass("oculto");
         // ----------------------------------------------------------------------------------------------------------------------------------
         document.addEventListener("keydown", function (event) {
             if (event.repeat == false) {
