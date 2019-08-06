@@ -30,6 +30,7 @@ let listening = false;
 let anticipos = false;
 let juego = false;
 let aviso = false;
+let touchend = true;
 // --------------------------------------------------------------------------------------------------------------------
 let chekeo = 0;
 let campos = [];
@@ -175,8 +176,8 @@ function empieza() {
     } else {
         // ----------------------------------------------------------------------------------------------------------------------------------
         document.addEventListener("keydown", function (event) {
-            console.log('AddEventListener------------------------------------');
             if (event.repeat == false) {
+                console.log('AddEventListener------------------------------------');
                 listening = true;
                 if (event.key == " " && app.color == colorChoose) {
                     console.log("Correcto")
@@ -210,71 +211,79 @@ function empieza() {
 
             };
         });
-        // ----------------eventos de click------
-        document.addEventListener("touchstart", function (event) {
-            console.log('AddEventListener------------------------------------');
-            listening = true;
-            if (app.color == colorChoose) {
-                console.log("Correcto")
-                colorCorrecto = true;
-                // cases = 1;
-            } else if (app.color !== colorChoose) {
-                if (app.color == "black") {
-                    anticipos = true;
-                    console.log("Anticipa")
-                } else {
-                    console.log("Incorrecto")
-                    colorCorrecto = false;
-                    // cases = 2;
-                };
-            };
-            if (colorCorrecto == true) {
-                var deltaT1 = objeto.GetLastTime("miliseconds");
-                loopRespuestasArray.push(deltaT1);
-                return true;
-            } else if (colorCorrecto == false) {
-                loopRespuestasinCorrectas.push(1);
-                return true;
-            }
-            if (anticipos == true) {
-                return true;
-            };
-        });
-        // ----------------------------------------
         document.addEventListener("keyup", function (event) {
             if (aviso == true) {
                 $(".aviso").addClass("hideDisplay");
             }
             aviso = false;
-        })
+        });
+        // ----------------eventos de click------
+        document.addEventListener("touchstart", function (event) {
+            if (touchend == true) {
+                console.log('AddEventListenerTouch------------------------------------');
+                touchend = false;
+                // touchdown = true;
+                listening = true;
+                if (app.color == colorChoose) {
+                    console.log("Correcto")
+                    colorCorrecto = true;
+                    // cases = 1;
+                } else if (app.color !== colorChoose) {
+                    if (app.color == "black") {
+                        anticipos = true;
+                        console.log("Anticipa")
+                    } else {
+                        console.log("Incorrecto")
+                        colorCorrecto = false;
+                        // cases = 2;
+                    };
+                };
+                if (colorCorrecto == true) {
+                    var deltaT1 = objeto.GetLastTime("miliseconds");
+                    loopRespuestasArray.push(deltaT1);
+                    return true;
+                } else if (colorCorrecto == false) {
+                    loopRespuestasinCorrectas.push(1);
+                    return true;
+                }
+                if (anticipos == true) {
+                    return true;
+                };
+            };
+        });
+        document.addEventListener("touchend", function (event) {
+            console.log('touchend')
+            touchend = true;
+            // touchdown = false;
+        });
         // ----------------------------------------------------------------------------------------------------------------------------------
         $(".contenedorJuego").removeClass("oculto")
         var interval = setInterval(function () {
-            console.log('Respuestas----------------------------------------------')
-            if (listening == true && anticipos == true) {
-                RespuestasAnticipadas.push(1);
-                console.log('RespuestaAnticipada')
+            if (aviso == false && touchend == true) {
+                console.log('Respuestas----------------------------------------------')
+                if (listening == true && anticipos == true) {
+                    RespuestasAnticipadas.push(1);
+                    console.log('RespuestaAnticipada')
+                };
+                if (listening == true && colorCorrecto == true) {
+                    tiempoDeRespuestasArray.push(loopRespuestasArray[loopRespuestasArray.length - 1]);
+                    console.log('TiempoDeRespuestas: ' + tiempoDeRespuestasArray);
+                    timesRun = timesRun + 1;
+                } else if (listening == true && colorCorrecto == false) {
+                    respuestasinCorrectas.push(loopRespuestasinCorrectas[loopRespuestasinCorrectas.length - 1]);
+                    console.log('RespuestasinCorrectas: ' + respuestasinCorrectas);
+                    timesRun = timesRun + 1;
+                } else if (estadoNegro == false && colorChoose !== app.color && juego == true) {
+                    loopRespuestasOmitidasCorrectas.push(1);
+                    console.log('RespuestasOmitidasCorrectas: ' + loopRespuestasOmitidasCorrectas);
+                    timesRun = timesRun + 1;
+                } else if (estadoNegro == false && colorChoose == app.color && juego == true) {
+                    loopRespuestasOmitidasIncorrectas.push(1);
+                    console.log('RespuestasOmitidasIncorrectas: ' + loopRespuestasOmitidasIncorrectas);
+                    timesRun = timesRun + 1;
+                }
+                console.log('Ciclo número: ' + timesRun);
             };
-            if (listening == true && colorCorrecto == true) {
-                tiempoDeRespuestasArray.push(loopRespuestasArray[loopRespuestasArray.length - 1]);
-                console.log('TiempoDeRespuestas: ' + tiempoDeRespuestasArray);
-                timesRun = timesRun + 1;
-            } else if (listening == true && colorCorrecto == false) {
-                respuestasinCorrectas.push(loopRespuestasinCorrectas[loopRespuestasinCorrectas.length - 1]);
-                console.log('RespuestasinCorrectas: ' + respuestasinCorrectas);
-                timesRun = timesRun + 1;
-            } else if (estadoNegro == false && colorChoose !== app.color && juego == true) {
-                loopRespuestasOmitidasCorrectas.push(1);
-                console.log('RespuestasOmitidasCorrectas: ' + loopRespuestasOmitidasCorrectas);
-                timesRun = timesRun + 1;
-            } else if (estadoNegro == false && colorChoose == app.color && juego == true) {
-                loopRespuestasOmitidasIncorrectas.push(1);
-                console.log('RespuestasOmitidasIncorrectas: ' + loopRespuestasOmitidasIncorrectas);
-                timesRun = timesRun + 1;
-            }
-
-            console.log('Ciclo número: ' + timesRun);
-
             if (timesRun == numeroDeimagenes + 1) {
                 clearInterval(interval);
                 $("#circulo").css("background-color", "black");
@@ -320,7 +329,7 @@ function empieza() {
                 };
                 xhttp.send(JSON.stringify(datos));
                 // Comentar en caso de prueba
-                $("#bot").trigger('click');
+                // $("#bot").trigger('click');
                 console.log('sending')
                 return true;
             };
