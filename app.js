@@ -6,6 +6,7 @@ const app = express();
 var lengthCicloA = 0
 var lengthCicloB = 0
 let prueba = 0
+var key = "";
 // -----------------------------------------------------
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({
@@ -36,6 +37,7 @@ app.get("/", async function (req, res) {
             // En caso de haber conectado exitosamente hacemos paso de las variables obtenidas a un html
             lengthCicloA = results.length;
             res.render("index", {
+                tecla: key,
                 ProbabilidadVerde: await results[results.length - 1].ProbabilidadVerde,
                 tiempoDeImagen: await results[results.length - 1].TiempoDeImg,
                 tiempoDeFondo: await results[results.length - 1].TiempoDeFondo,
@@ -66,8 +68,13 @@ app.get("/exit", function (req, res) {
 })
 
 app.post("/", async function (req, res) {
+    let prom = 0;
+    req.body.tiempoDeRespuestas.forEach(function (element) {
+        prom = element + prom;
+    });
     var post = {
-        Registros: req.body.tiempoDeRespuestas,
+        PromedioTiempo: prom / (req.body.tiempoDeRespuestas.length),
+        Registros: req.body.tiempoDeRespuestas.toString(),
         Nombre: req.body.nombre,
         Apellido: req.body.apellido,
         Edad: req.body.edad,
@@ -90,6 +97,7 @@ app.post("/exit", function (req, res) {
 })
 
 app.post("/prof", async function (req, res) {
+    key = req.body.tecla;
     var cambios = {
         ProbabilidadVerde: req.body.probabilidadVerde,
         TiempoDeImg: req.body.tiempoDeImg,

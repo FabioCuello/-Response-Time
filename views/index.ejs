@@ -47,6 +47,7 @@
     <h1 class="oculto"><%=numeroDeImagenes%></h1>
     <h1 class="oculto"><%=color%></h1>
     <h1 class="oculto"><%=nombre%></h1>
+    <h1 class="oculto"><%=tecla%></h1>
 
     <form method="POST" action="/exit" class="form-signin formpadding">
         <div class="custom">
@@ -65,8 +66,17 @@
                     <% }; %>
 
                 </div>
-                <p>Para ello, debe pulsar la tecla <em>"Espacio"</em> <strong>solo</strong> cuando
-                    aparezca el color especificado.</p>
+                <% if (tecla == " "){ %>
+                <p>Para ello, debe pulsar la tecla <em>Espacio</em> <strong>solo</strong> cuando
+                    aparezca el color especificado.
+                    <strong>Asegurese de tener mayúsculas desactivadas.</strong>
+                </p>
+                <% } else {  %>
+                <p>Para ello, debe pulsar la tecla <em>"<%=tecla%>"</em> <strong>solo</strong> cuando
+                    aparezca el color especificado.
+                    <strong>Asegurese de tener mayúsculas desactivadas.</strong>
+                </p>
+                <% } %>
             </div>
             <div class="custom">
                 <h1 class="h3 mb-3 font-weight-normal">Ingrese sus datos</h1>
@@ -75,8 +85,18 @@
                 <input type="text" id="apellido" name="Apellidos" class="form-control middle" placeholder="Apellidos"
                     required>
                 <input type="number" id="edad" name="Edad" class="form-control middle" placeholder="Edad" required>
-                <input type="text" id="gSanguineo" name="GrupoSanguineo" class="form-control bottom"
-                    placeholder="Grupo Sanguineo" required>
+
+                <select name="GrupoSanguineo" id="gSanguineo" class="form-control middle" required autofocus>
+                    <option value="" disabled selected>Grupo Sanguineo</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                </select>
                 <a class="btn btn-lg btn-primary btn-block" style="margin-left: 0;" href="#circulo"
                     role="button">Empezar</a>
             </div>

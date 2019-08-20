@@ -4,11 +4,13 @@ const tiempoDeFondo = parseInt(document.getElementsByClassName("oculto")[2].inne
 const numeroDeimagenes = parseInt(document.getElementsByClassName("oculto")[3].innerHTML, 10);
 const colorValido = document.getElementsByClassName("oculto")[4].innerHTML;
 const NombrePrueba = document.getElementsByClassName("oculto")[5].innerHTML;
+const key = document.getElementsByClassName("oculto")[6].innerHTML;
 console.log('Probabilidad del verde:' + probabilidadVerde + "\n" +
     "Tiempo De imagenes: " + tiempoDeImg + "\n" +
     "Tiempo De Fondo: " + tiempoDeFondo +
     "\n" + "Numero de Imagenes: " + numeroDeimagenes + "\n" +
-    "Color Valido: " + colorValido + "\n" + "Nombre de prueba: " + NombrePrueba);
+    "Color Valido: " + colorValido + "\n" + "Nombre de prueba: " + NombrePrueba + "\n" +
+    "Tecla :" + key);
 let tiempoDeRespuestasArray = [];
 let loopRespuestasArray = [];
 let loopRespuestasinCorrectas = [];
@@ -164,11 +166,11 @@ function empieza() {
             if (event.repeat == false) {
                 console.log('AddEventListener------------------------------------');
                 listening = true;
-                if (event.key == " " && app.color == colorChoose) {
+                if (event.key == key && app.color == colorChoose) {
                     console.log("Correcto")
                     colorCorrecto = true;
                     // cases = 1;
-                } else if (event.key == " " && app.color !== colorChoose) {
+                } else if (event.key == key && app.color !== colorChoose) {
                     if (app.color == "black") {
                         anticipos = true;
                         console.log("Anticipa")
@@ -246,9 +248,9 @@ function empieza() {
                 console.log('Respuestas----------------------------------------------')
                 if (listening == true && anticipos == true) {
                     RespuestasAnticipadas.push(1);
-                    console.log('RespuestaAnticipada')
-                };
-                if (listening == true && colorCorrecto == true) {
+                    console.log('RespuestaAnticipada');
+                    timesRun = timesRun + 1;
+                } else if (listening == true && colorCorrecto == true) {
                     tiempoDeRespuestasArray.push(loopRespuestasArray[loopRespuestasArray.length - 1]);
                     console.log('TiempoDeRespuestas: ' + tiempoDeRespuestasArray);
                     timesRun = timesRun + 1;
@@ -298,7 +300,7 @@ function empieza() {
                 xhttp.setRequestHeader("Content-type", 'application/json');
                 var datos = {
                     respuestasAnticipadas: sumaRespuestasAnticipadas,
-                    tiempoDeRespuestas: tiempoDeRespuestasArray.toString(),
+                    tiempoDeRespuestas: tiempoDeRespuestasArray,
                     numeroDeRespuestasCorrectas: tiempoDeRespuestasArray.length + sumaRespuestasOmitidasCorrectas,
                     numeroDeRespuestasIncorrectas: sumaRespuestasIncorrectas,
                     respuestasOmitidasCorrectas: sumaRespuestasOmitidasCorrectas,
