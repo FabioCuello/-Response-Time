@@ -1,3 +1,7 @@
+body {
+    padding: 2%;
+}
+
 table tr td {
     border: 1px solid;
     font-size: 1rem;
@@ -23,4 +27,8 @@ button {
 
 p {
     font-size: 1.2rem;
+}
+
+.form-group {
+    margin: 2rem 0;
 }

@@ -37,7 +37,7 @@ app.get("/", async function (req, res) {
             // En caso de haber conectado exitosamente hacemos paso de las variables obtenidas a un html
             lengthCicloA = results.length;
             res.render("index", {
-                tecla: key,
+                tecla: await results[results.length - 1].tecla,
                 ProbabilidadVerde: await results[results.length - 1].ProbabilidadVerde,
                 tiempoDeImagen: await results[results.length - 1].TiempoDeImg,
                 tiempoDeFondo: await results[results.length - 1].TiempoDeFondo,
@@ -49,7 +49,7 @@ app.get("/", async function (req, res) {
         };
     });
 
-})
+});
 app.get("/prof", async function (req, res) {
     connection.query('SELECT* FROM `PROFESOR`', async function (err, results, fields) {
         if (err) {
@@ -61,11 +61,11 @@ app.get("/prof", async function (req, res) {
             // Cerramos conexion
         };
     });
-})
+});
 
 app.get("/exit", function (req, res) {
     res.render("exit");
-})
+});
 
 app.post("/", async function (req, res) {
     let prom = 0;
@@ -91,13 +91,17 @@ app.post("/", async function (req, res) {
         // Neat!
     });
     console.log(query.sql);
-})
+});
 app.post("/exit", function (req, res) {
     res.redirect("/exit")
-})
+});
 
-app.post("/prof", async function (req, res) {
-    key = req.body.tecla;
+app.post("/test", async function (req, res) {
+    if (req.body.tecla == "otra") {
+        key = req.body.otratecla;
+    } else {
+        key = req.body.tecla;
+    };
     var cambios = {
         ProbabilidadVerde: req.body.probabilidadVerde,
         TiempoDeImg: req.body.tiempoDeImg,
@@ -105,7 +109,9 @@ app.post("/prof", async function (req, res) {
         NumeroDeImg: req.body.numeroDeImg,
         Color: req.body.color,
         nombre: req.body.nombre,
+        tecla: key
     };
+    console.log(req.body);
     var query = await connection.query('INSERT INTO PROFESOR SET ?', cambios, function (error, results, fields) {
         if (error) throw error;
         else {
@@ -113,8 +119,8 @@ app.post("/prof", async function (req, res) {
         }
     });
     console.log(query.sql);
-})
+});
 
 app.listen(process.env.PORT || 3000, function () {
     console.log("running");
-})
+});

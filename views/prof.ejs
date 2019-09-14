@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profesor</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
     <link rel="stylesheet" href="styles2.css">
 </head>
 
@@ -53,19 +61,66 @@
     <p>Este es el nombre que quiera darle a la prueba. Puede escribir lo que sea en ella</p>
     <hr>
     <h1>Establecer nuevos parámetros</h1>
-    <form method="POST" action="/prof">
-        <input placeholder="Probabilidad del verde" name="probabilidadVerde" type="number">
-        <input placeholder="Tiempo Del estímulo" name="tiempoDeImg" type="number">
-        <input placeholder="Tiempo entre estímulos" name="tiempoDeFondo" type="number">
-        <input placeholder="Numero de Imagenes" name="numeroDeImg" type="number">
-        <input placeholder="Color a reaccionar" name="color" type="text">
-        <input placeholder="Nombre de Prueba" name="nombre" type="text">
-        <input placeholder="Tecla a presionar" name="tecla" type="text">
-        <button type="submit">Establecer</button>
+    <!-- ---------------------- -->
+    <form method="POST" action="/test">
+        <div class="form-group">
+            <label>Nombre de la prueba:</label>
+            <input type="text" name="nombre" class="form-control">
+        </div>
+        <div class="form-group">
+            <label style="padding-right:10px;">Color de reacción: </label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="color" id="inlineRadio1" value="rojo">
+                <label class="form-check-label" for="inlineRadio1">Rojo</label>
+                <input style="margin-left:10px;" class="form-check-input" type="radio" name="color" id="inlineRadio2"
+                    value="verde">
+                <label class="form-check-label" for="inlineRadio2">Verde</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Probabilidad:</label>
+            <select class="form-control" name="probabilidadVerde" id="">
+                <option value="" disabled selected>Escoja la posibilidad de cada color</option>
+                <option value=0>0% Verde - 100% Rojo</option>
+                <option value=1>10% Verde - 90% Rojo</option>
+                <option value=2>20% Verde - 80% Rojo</option>
+                <option value=3>30% Verde - 70% Rojo</option>
+                <option value=4>40% Verde - 60% Rojo</option>
+                <option value=5>50% Verde - 50% Rojo</option>
+                <option value=6>60% Verde - 40% Rojo</option>
+                <option value=7>70% Verde - 30% Rojo</option>
+                <option value=8>80% Verde - 20% Rojo</option>
+                <option value=9>90% Verde - 10% Rojo</option>
+                <option value=10>100% Verde - 0% Rojo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Tiempo de estimulo (segundos)</label>
+            <input class="form-control" name="tiempoDeImg" type="number" min="1" pattern="^[0-9]+">
+        </div>
+        <div class="form-group">
+            <label>Tiempo entre estímulos (segundos)</label>
+            <input class="form-control" name="tiempoDeFondo" type="number" min="1" pattern="^[0-9]+">
+        </div>
+        <div class="form-group">
+            <label>Número de imagenes</label>
+            <input class="form-control" name="numeroDeImg" type="number" min="1" pattern="^[0-9]+">
+        </div>
+        <div class="form-group">
+            <label style="padding-right:10px;">Tecla: </label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tecla" id="inlineRadio1" value=" ">
+                <label class="form-check-label" for="inlineRadio1">Espacio</label>
+                <input style="margin-left:10px;" class="form-check-input" type="radio" name="tecla" id="inlineRadio2"
+                    value="otra">
+                <label class="form-check-label" for="inlineRadio2">Otra</label>
+                <input class="form-control" style="width: 200px;" type="text" name="otratecla"
+                    placeholder="Sin espacios y en minúscula">
+            </div>
+
+        </div>
+        <button type="submit" class="btn btn-info">Establecer</button>
     </form>
-    <br>
-    <br>
-    <br>
 
 </body>
 

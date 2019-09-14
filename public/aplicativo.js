@@ -1,3 +1,18 @@
+$("input:checkbox").on('click', function () {
+    // in the handler, 'this' refers to the box clicked on
+    var $box = $(this);
+    if ($box.is(":checked")) {
+        // the name of the box is retrieved using the .attr() method
+        // as it is assumed and expected to be immutable
+        var group = "input:checkbox[name='" + $box.attr("name") + "']";
+        // the checked state of the group/box on the other hand will change
+        // and the current value is retrieved using .prop() method
+        $(group).prop("checked", false);
+        $box.prop("checked", true);
+    } else {
+        $box.prop("checked", false);
+    }
+});
 const tiempoDeImg = parseInt(document.getElementsByClassName("oculto")[0].innerHTML, 10) * 1000;
 const probabilidadVerde = parseInt(document.getElementsByClassName("oculto")[1].innerHTML, 10);
 const tiempoDeFondo = parseInt(document.getElementsByClassName("oculto")[2].innerHTML, 10) * 1000;
