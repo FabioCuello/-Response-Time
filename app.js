@@ -25,38 +25,38 @@ const connection = mysql.createConnection({
 });
 
 
-app.get("/", async function (req, res) {
+app.get("/", function (req, res) {
 
     // Conectamos con el servidor
 
     // Buscamos en el servidor
-    connection.query('SELECT* FROM `PROFESOR`', async function (err, results, fields) {
+    connection.query('SELECT* FROM `PROFESOR`', function (err, results, fields) {
         if (err) {
             console.log("error in query " + err)
         } else {
             // En caso de haber conectado exitosamente hacemos paso de las variables obtenidas a un html
             lengthCicloA = results.length;
             res.render("index", {
-                tecla: await results[results.length - 1].tecla,
-                ProbabilidadVerde: await results[results.length - 1].ProbabilidadVerde,
-                tiempoDeImagen: await results[results.length - 1].TiempoDeImg,
-                tiempoDeFondo: await results[results.length - 1].TiempoDeFondo,
-                numeroDeImagenes: await results[results.length - 1].NumeroDeImg,
-                color: await results[results.length - 1].Color,
-                nombre: await results[results.length - 1].Nombre
+                tecla: results[results.length - 1].tecla,
+                ProbabilidadVerde: results[results.length - 1].ProbabilidadVerde,
+                tiempoDeImagen: results[results.length - 1].TiempoDeImg,
+                tiempoDeFondo: results[results.length - 1].TiempoDeFondo,
+                numeroDeImagenes: results[results.length - 1].NumeroDeImg,
+                color: results[results.length - 1].Color,
+                nombre: results[results.length - 1].Nombre
             });
             // Cerramos conexion
         };
     });
 
 });
-app.get("/prof", async function (req, res) {
-    connection.query('SELECT* FROM `PROFESOR`', async function (err, results, fields) {
+app.get("/prof", function (req, res) {
+    connection.query('SELECT* FROM `PROFESOR`', function (err, results, fields) {
         if (err) {
             console.log("error in query " + err)
         } else {
             res.render("prof", {
-                results: await results
+                results: results
             });
             // Cerramos conexion
         };
@@ -67,7 +67,7 @@ app.get("/exit", function (req, res) {
     res.render("exit");
 });
 
-app.post("/", async function (req, res) {
+app.post("/", function (req, res) {
     let prom = 0;
     req.body.tiempoDeRespuestas.forEach(function (element) {
         prom = element + prom;
@@ -87,16 +87,20 @@ app.post("/", async function (req, res) {
         Nombre_prueba: req.body.nombrePrueba
     };
     var query = connection.query('INSERT INTO PRUEBA SET ?', post, function (error, results, fields) {
-        if (error) throw error;
+        if (error) {
+            throw error
+        } else {
+            console.log(query.sql);
+        };
         // Neat!
     });
-    console.log(query.sql);
+
 });
 app.post("/exit", function (req, res) {
     res.redirect("/exit")
 });
 
-app.post("/test", async function (req, res) {
+app.post("/test", function (req, res) {
     if (req.body.tecla == "otra") {
         key = req.body.otratecla;
     } else {
@@ -111,14 +115,14 @@ app.post("/test", async function (req, res) {
         nombre: req.body.nombre,
         tecla: key
     };
-    console.log(req.body);
-    var query = await connection.query('INSERT INTO PROFESOR SET ?', cambios, function (error, results, fields) {
+    var query = connection.query('INSERT INTO PROFESOR SET ?', cambios, function (error, results, fields) {
         if (error) throw error;
         else {
+            console.log(query.sql);
             res.render("success");
         }
     });
-    console.log(query.sql);
+
 });
 
 app.listen(process.env.PORT || 3000, function () {
