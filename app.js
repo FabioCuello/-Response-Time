@@ -64,15 +64,18 @@ app.route("/")
             Omision: req.body.respuestasOmitidasinCorrectas,
             Nombre_prueba: req.body.nombrePrueba
         };
+        if (post.PromedioTiempo != NaN) {
+            var query = pool.query('INSERT INTO PRUEBA SET ?', post, function (error, results, fields) {
+                if (error) {
+                    throw error
+                } else {
+                    console.log(query.sql);
+                };
+                // Neat!
+            });
+        }
         console.log(post)
-        var query = pool.query('INSERT INTO PRUEBA SET ?', post, function (error, results, fields) {
-            if (error) {
-                throw error
-            } else {
-                console.log(query.sql);
-            };
-            // Neat!
-        });
+
     })
 //----------------------------------------------- "/prof" route----------------------------------------------------------
 app.route("/prof")
