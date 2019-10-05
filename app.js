@@ -64,6 +64,7 @@ app.route("/")
             Omision: req.body.respuestasOmitidasinCorrectas,
             Nombre_prueba: req.body.nombrePrueba
         };
+        console.log(post)
         var query = pool.query('INSERT INTO PRUEBA SET ?', post, function (error, results, fields) {
             if (error) {
                 throw error
