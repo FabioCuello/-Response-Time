@@ -64,17 +64,20 @@ app.route("/")
             Omision: req.body.respuestasOmitidasinCorrectas,
             Nombre_prueba: req.body.nombrePrueba
         };
-        if (post.PromedioTiempo != NaN) {
-            var query = pool.query('INSERT INTO PRUEBA SET ?', post, function (error, results, fields) {
-                if (error) {
-                    throw error
-                } else {
-                    console.log(query.sql);
-                };
-                // Neat!
-            });
+        if (isNaN(post.PromedioTiempo)) {
+            post.PromedioTiempo = 0;
         }
-        console.log(post)
+        var query = pool.query('INSERT INTO PRUEBA SET ?', post, function (error, results, fields) {
+            if (error) {
+                throw error
+            } else {
+                console.log(query.sql);
+                res.send(query.sql);
+            };
+            // Neat!
+        });
+
+
 
     })
 //----------------------------------------------- "/prof" route----------------------------------------------------------
@@ -110,17 +113,16 @@ app.route("/prof")
             if (error) throw error;
             else {
                 console.log(query.sql);
-                res.render("success");
+                res.send(query.sql);
             }
         });
 
     });
-//----------------------------------------------- "/exit" route----------------------------------------------------------
+// ---------------------------------------------
 app.route("/exit")
-    .post(function (req, res) {
+    .get(function (req, res) {
         res.render("exit");
     })
-
 //----------------------------------------------- pool state ----------------------------------------------------------
 
 pool.on('acquire', function (connection) {

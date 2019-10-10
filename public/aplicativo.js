@@ -14,13 +14,6 @@ $("input:checkbox").on('click', function () {
         $box.prop("checked", false);
     }
 });
-const tiempoDeImg = parseInt(document.getElementsByClassName("oculto")[0].innerHTML, 10) * 1000;
-const probabilidadVerde = parseInt(document.getElementsByClassName("oculto")[1].innerHTML, 10);
-const tiempoDeFondo = parseInt(document.getElementsByClassName("oculto")[2].innerHTML, 10) * 1000;
-const numeroDeimagenes = parseInt(document.getElementsByClassName("oculto")[3].innerHTML, 10);
-const colorValido = document.getElementsByClassName("oculto")[4].innerHTML;
-const NombrePrueba = document.getElementsByClassName("oculto")[5].innerHTML;
-const key = document.getElementsByClassName("oculto")[6].innerHTML;
 console.log('Probabilidad del verde:' + probabilidadVerde + "\n" +
     "Tiempo De imagenes: " + tiempoDeImg + "\n" +
     "Tiempo De Fondo: " + tiempoDeFondo +
@@ -329,9 +322,12 @@ function empieza() {
                     nombrePrueba: NombrePrueba
                 };
                 xhttp.send(JSON.stringify(datos));
-                $("#bot").trigger('click');
-                console.log('sending')
-                return true;
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        console.log(xhttp.response);
+                        $('#form').submit();
+                    }
+                };
             };
             juego = true;
             estadoColor = false;

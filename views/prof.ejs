@@ -18,51 +18,51 @@
 </head>
 
 <body>
-    <table>
-        <tr>
-            <td> Probabilidad Verde </td>
-            <td> Tiempo Del estímulo </td>
-            <td> Tiempo entre estímulos </td>
-            <td> Numero de Imagenes </td>
-            <td> Color a reaccionar </td>
-            <td> Nombre de Prueba </td>
-        </tr>
-        <% results.forEach(function(element){ %>
-        <tr>
-            <td><%= element.ProbabilidadVerde%> </td>
-            <td><%= element.TiempoDeImg%> </td>
-            <td><%= element.TiempoDeFondo%> </td>
-            <td><%= element.NumeroDeImg%> </td>
-            <td><%= element.Color%> </td>
-            <td><%= element.Nombre%> </td>
-        </tr>
-        <% }) %>
-    </table>
-    <hr>
-    <h1>Indicaciones</h1>
-    <br>
-    <h2>Probabilidad Verde</h2>
-    <p style="width: 1000px;">Establece la probabilidad del color verde. Se debe colocar un número enterio y solo un
-        número.
-        Al indicar la
-        probabilidad del color verde, también se está indicando la del color rojo.
-        Porque de forma implícita si la
-        probabilidad del color verde es de 10%, la del rojo será del 90%. Ejemplo: 1=
-        10%, 2=20%</p>
-    <h2>Tiempo del estímulo</h2>
-    <p>Indica el tiempo de duración del estímulo. Solo se aceptan valores enteros y ya está en segundos</p>
-    <h2>Tiempo entre estímulos</h2>
-    <p>Indica el tiempo de duración entre estímulos. Solo se aceptan valores enteros y ya está en segundos</p>
-    <h2>Número de Imagenes</h2>
-    <p>Establece el número de estímulos que aparecerán en la prueba</p>
-    <h2>Color a reaccionar</h2>
-    <p>Debe escribir "verde" o "rojo", sin espacios antes o después de la palabra. Ejemplo:rojo</p>
-    <h2>Nombre de la prueba</h2>
-    <p>Este es el nombre que quiera darle a la prueba. Puede escribir lo que sea en ella</p>
-    <hr>
-    <h1>Establecer nuevos parámetros</h1>
-    <!-- ---------------------- -->
-    <form method="POST" action="/prof">
+    <form action="/prof" method="post">
+        <table>
+            <tr>
+                <td> Probabilidad Verde </td>
+                <td> Tiempo Del estímulo </td>
+                <td> Tiempo entre estímulos </td>
+                <td> Numero de Imagenes </td>
+                <td> Color a reaccionar </td>
+                <td> Nombre de Prueba </td>
+            </tr>
+            <% results.forEach(function(element){ %>
+            <tr>
+                <td><%= element.ProbabilidadVerde%> </td>
+                <td><%= element.TiempoDeImg%> </td>
+                <td><%= element.TiempoDeFondo%> </td>
+                <td><%= element.NumeroDeImg%> </td>
+                <td><%= element.Color%> </td>
+                <td><%= element.Nombre%> </td>
+            </tr>
+            <% }) %>
+        </table>
+        <hr>
+        <h1>Indicaciones</h1>
+        <br>
+        <h2>Probabilidad Verde</h2>
+        <p style="width: 1000px;">Establece la probabilidad del color verde. Se debe colocar un número enterio y solo un
+            número.
+            Al indicar la
+            probabilidad del color verde, también se está indicando la del color rojo.
+            Porque de forma implícita si la
+            probabilidad del color verde es de 10%, la del rojo será del 90%. Ejemplo: 1=
+            10%, 2=20%</p>
+        <h2>Tiempo del estímulo</h2>
+        <p>Indica el tiempo de duración del estímulo. Solo se aceptan valores enteros y ya está en segundos</p>
+        <h2>Tiempo entre estímulos</h2>
+        <p>Indica el tiempo de duración entre estímulos. Solo se aceptan valores enteros y ya está en segundos</p>
+        <h2>Número de Imagenes</h2>
+        <p>Establece el número de estímulos que aparecerán en la prueba</p>
+        <h2>Color a reaccionar</h2>
+        <p>Debe escribir "verde" o "rojo", sin espacios antes o después de la palabra. Ejemplo:rojo</p>
+        <h2>Nombre de la prueba</h2>
+        <p>Este es el nombre que quiera darle a la prueba. Puede escribir lo que sea en ella</p>
+        <hr>
+        <h1>Establecer nuevos parámetros</h1>
+        <!-- ------------------------>
         <div class="form-group">
             <label>Nombre de la prueba:</label>
             <input type="text" name="nombre" class="form-control">
@@ -119,9 +119,8 @@
             </div>
 
         </div>
-        <button type="submit" class="btn btn-info">Establecer</button>
+        <button type="submit" class="btn btn-info">Establecer</buton>
     </form>
-
 </body>
 
 </html>
