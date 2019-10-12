@@ -14,7 +14,7 @@ $("input:checkbox").on('click', function () {
         $box.prop("checked", false);
     }
 });
-console.log('Probabilidad del verde:' + probabilidadVerde + "\n" +
+console.log('Probabilidad del verde:' + (probabilidadVerde) + "\n" +
     "Tiempo De imagenes: " + tiempoDeImg + "\n" +
     "Tiempo De Fondo: " + tiempoDeFondo +
     "\n" + "Numero de Imagenes: " + numeroDeimagenes + "\n" +
@@ -45,6 +45,7 @@ let GSanguineo = "";
 let Apellido = "";
 // --------------------------------------------------------------------------------------------------------------------
 var listaverde = [...Array(probabilidadVerde).keys()];
+console.log(listaverde);
 if (colorValido == "verde") {
     colorChoose = "green";
 } else if (colorValido == "rojo") {
