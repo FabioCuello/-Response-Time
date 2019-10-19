@@ -76,9 +76,6 @@ app.route("/")
             };
             // Neat!
         });
-
-
-
     })
 //----------------------------------------------- "/prof" route----------------------------------------------------------
 app.route("/prof")
@@ -110,14 +107,29 @@ app.route("/prof")
             tecla: key
         };
         var query = pool.query('INSERT INTO PROFESOR SET ?', cambios, function (error, results, fields) {
-            if (error) throw error;
-            else {
+            if (error) {
+                console.log(err)
+                res.send("Ocurrió un error, por favor realize de nuevo la prueba");
+            } else {
                 console.log(query.sql);
-                res.send(query.sql);
+                res.render("success");
             }
         });
 
     });
+
+
+app.get("/Apply", function (req, res) {
+    pool.query('SELECT* FROM `PROFESOR`', function (err, results, fields) {
+        if (err) {
+            console.log("error in query " + err)
+        } else {
+            res.send(results[results.length - 1]);
+        };
+    });
+});
+
+
 // ---------------------------------------------
 app.route("/exit")
     .get(function (req, res) {

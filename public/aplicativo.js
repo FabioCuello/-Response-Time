@@ -160,7 +160,8 @@ function checkea() {
             GSanguineo = gSanguineo.valor;
         };
     });
-    empieza()
+    empieza();
+
 }
 
 function empieza() {
@@ -169,173 +170,179 @@ function empieza() {
         campos = [];
         chekeo = 0;
     } else {
-        $(".custom").addClass("oculto");
-        $(".contenedorJuego").removeClass("oculto");
-        // ----------------------------------------------------------------------------------------------------------------------------------
-        document.addEventListener("keydown", function (event) {
-            if (event.repeat == false) {
-                console.log('AddEventListener------------------------------------');
-                listening = true;
-                if (event.key == key && app.color == colorChoose) {
-                    console.log("Correcto")
-                    colorCorrecto = true;
-                    // cases = 1;
-                } else if (event.key == key && app.color !== colorChoose) {
-                    if (app.color == "black") {
-                        anticipos = true;
-                        console.log("Anticipa")
-                    } else {
-                        console.log("Incorrecto")
-                        colorCorrecto = false;
-                        // cases = 2;
+        $.get("/Apply", function (check) {
+            if (check.tecla == key && check.ProbabilidadVerde == probabilidadVerde && check.TiempoDeImg == (tiempoDeImg / 1000) && check.TiempoDeFondo == (tiempoDeFondo / 1000) && check.NumeroDeImg == numeroDeimagenes && check.Color == colorValido && check.Nombre == NombrePrueba) {
+                $(".custom").addClass("oculto");
+                $(".contenedorJuego").removeClass("oculto");
+                // ----------------------------------------------------------------------------------------------------------------------------------
+                document.addEventListener("keydown", function (event) {
+                    if (event.repeat == false) {
+                        console.log('AddEventListener------------------------------------');
+                        listening = true;
+                        if (event.key == key && app.color == colorChoose) {
+                            console.log("Correcto")
+                            colorCorrecto = true;
+                            // cases = 1;
+                        } else if (event.key == key && app.color !== colorChoose) {
+                            if (app.color == "black") {
+                                anticipos = true;
+                                console.log("Anticipa")
+                            } else {
+                                console.log("Incorrecto")
+                                colorCorrecto = false;
+                                // cases = 2;
+                            };
+                        };
+                        if (colorCorrecto == true) {
+                            var deltaT1 = objeto.GetLastTime("miliseconds");
+                            loopRespuestasArray.push(deltaT1);
+                            return true;
+                        } else if (colorCorrecto == false) {
+                            loopRespuestasinCorrectas.push(1);
+                            return true;
+                        }
+                        if (anticipos == true) {
+                            return true;
+                        };
                     };
-                };
-                if (colorCorrecto == true) {
-                    var deltaT1 = objeto.GetLastTime("miliseconds");
-                    loopRespuestasArray.push(deltaT1);
-                    return true;
-                } else if (colorCorrecto == false) {
-                    loopRespuestasinCorrectas.push(1);
-                    return true;
-                }
-                if (anticipos == true) {
-                    return true;
-                };
-            };
-            if (event.repeat == true) {
-                aviso = true;
-                $(".aviso").removeClass("hideDisplay");
+                    if (event.repeat == true) {
+                        aviso = true;
+                        $(".aviso").removeClass("hideDisplay");
 
-            };
-        });
-        document.addEventListener("keyup", function (event) {
-            if (aviso == true) {
-                $(".aviso").addClass("hideDisplay");
-            }
-            aviso = false;
-        });
-        // ----------------eventos de click------
-        document.addEventListener("touchstart", function (event) {
-            if (touchend == true) {
-                console.log('AddEventListenerTouch------------------------------------');
-                touchend = false;
-                // touchdown = true;
-                listening = true;
-                if (app.color == colorChoose) {
-                    console.log("Correcto")
-                    colorCorrecto = true;
-                    // cases = 1;
-                } else if (app.color !== colorChoose) {
-                    if (app.color == "black") {
-                        anticipos = true;
-                        console.log("Anticipa")
-                    } else {
-                        console.log("Incorrecto")
-                        colorCorrecto = false;
                     };
-                };
-                if (colorCorrecto == true) {
-                    var deltaT1 = objeto.GetLastTime("miliseconds");
-                    loopRespuestasArray.push(deltaT1);
-                    return true;
-                } else if (colorCorrecto == false) {
-                    loopRespuestasinCorrectas.push(1);
-                    return true;
-                }
-                if (anticipos == true) {
-                    return true;
-                };
-            };
-        });
-        document.addEventListener("touchend", function (event) {
-            console.log('touchend')
-            touchend = true;
-        });
-        // ----------------------------------------------------------------------------------------------------------------------------------
-
-        var interval = setInterval(function () {
-            if (aviso == false && touchend == true) {
-                console.log('Respuestas----------------------------------------------')
-                if (listening == true && anticipos == true) {
-                    RespuestasAnticipadas.push(1);
-                    console.log('RespuestaAnticipada');
-                    timesRun = timesRun + 1;
-                } else if (listening == true && colorCorrecto == true) {
-                    tiempoDeRespuestasArray.push(loopRespuestasArray[loopRespuestasArray.length - 1]);
-                    console.log('TiempoDeRespuestas: ' + tiempoDeRespuestasArray);
-                    timesRun = timesRun + 1;
-                } else if (listening == true && colorCorrecto == false) {
-                    respuestasinCorrectas.push(loopRespuestasinCorrectas[loopRespuestasinCorrectas.length - 1]);
-                    console.log('RespuestasinCorrectas: ' + respuestasinCorrectas);
-                    timesRun = timesRun + 1;
-                } else if (estadoNegro == false && colorChoose !== app.color && juego == true) {
-                    loopRespuestasOmitidasCorrectas.push(1);
-                    console.log('RespuestasOmitidasCorrectas: ' + loopRespuestasOmitidasCorrectas);
-                    timesRun = timesRun + 1;
-                } else if (estadoNegro == false && colorChoose == app.color && juego == true) {
-                    loopRespuestasOmitidasIncorrectas.push(1);
-                    console.log('RespuestasOmitidasIncorrectas: ' + loopRespuestasOmitidasIncorrectas);
-                    timesRun = timesRun + 1;
-                }
-                console.log('Ciclo número: ' + timesRun);
-            };
-            if (timesRun == numeroDeimagenes + 1) {
-                clearInterval(interval);
-                $("#circulo").css("background-color", "black");
-                var sumaRespuestasOmitidasCorrectas = 0;
-                var sumaRespuestasOmitidasinCorrectas = 0;
-                var sumaRespuestasAnticipadas = 0;
-                var sumaRespuestasIncorrectas = 0;
-                loopRespuestasOmitidasCorrectas.forEach(function (element) {
-                    sumaRespuestasOmitidasCorrectas = sumaRespuestasOmitidasCorrectas + element;
-                })
-                loopRespuestasOmitidasIncorrectas.forEach(function (element) {
-                    sumaRespuestasOmitidasinCorrectas = sumaRespuestasOmitidasinCorrectas + element;
-                })
-                RespuestasAnticipadas.forEach(function (element) {
-                    sumaRespuestasAnticipadas = sumaRespuestasAnticipadas + element;
-                })
-                respuestasinCorrectas.forEach(function (element) {
-                    sumaRespuestasIncorrectas = sumaRespuestasIncorrectas + element;
-                })
-                console.log("Respuestas anticipadas: " + sumaRespuestasAnticipadas);
-                console.log('El tiempo de respuesta: ' + tiempoDeRespuestasArray);
-                console.log('El numero de respuestas incorrectas: ' + respuestasinCorrectas);
-                console.log("El numero de respuestas omitidas correctas es: " + sumaRespuestasOmitidasCorrectas);
-                console.log("El numero de respuestas omitidas incorrectas es: " + sumaRespuestasOmitidasinCorrectas);
-                // -----------------------
-
-                var xhttp = new XMLHttpRequest();
-                xhttp.open("POST", '/');
-                xhttp.setRequestHeader("Content-type", 'application/json');
-                var datos = {
-                    respuestasAnticipadas: sumaRespuestasAnticipadas,
-                    tiempoDeRespuestas: tiempoDeRespuestasArray,
-                    numeroDeRespuestasCorrectas: tiempoDeRespuestasArray.length + sumaRespuestasOmitidasCorrectas,
-                    numeroDeRespuestasIncorrectas: sumaRespuestasIncorrectas,
-                    respuestasOmitidasCorrectas: sumaRespuestasOmitidasCorrectas,
-                    respuestasOmitidasinCorrectas: sumaRespuestasOmitidasinCorrectas,
-                    nombre: Nombre,
-                    apellido: Apellido,
-                    edad: Edad,
-                    gSanguineo: GSanguineo,
-                    numeroDeimagenes: numeroDeimagenes,
-                    nombrePrueba: NombrePrueba
-                };
-                xhttp.send(JSON.stringify(datos));
-                xhttp.onreadystatechange = function () {
-                    if (xhttp.readyState == 4 && xhttp.status == 200) {
-                        console.log(xhttp.response);
-                        $('#form').submit();
+                });
+                document.addEventListener("keyup", function (event) {
+                    if (aviso == true) {
+                        $(".aviso").addClass("hideDisplay");
                     }
-                };
+                    aviso = false;
+                });
+                // ----------------eventos de click------
+                document.addEventListener("touchstart", function (event) {
+                    if (touchend == true) {
+                        console.log('AddEventListenerTouch------------------------------------');
+                        touchend = false;
+                        // touchdown = true;
+                        listening = true;
+                        if (app.color == colorChoose) {
+                            console.log("Correcto")
+                            colorCorrecto = true;
+                            // cases = 1;
+                        } else if (app.color !== colorChoose) {
+                            if (app.color == "black") {
+                                anticipos = true;
+                                console.log("Anticipa")
+                            } else {
+                                console.log("Incorrecto")
+                                colorCorrecto = false;
+                            };
+                        };
+                        if (colorCorrecto == true) {
+                            var deltaT1 = objeto.GetLastTime("miliseconds");
+                            loopRespuestasArray.push(deltaT1);
+                            return true;
+                        } else if (colorCorrecto == false) {
+                            loopRespuestasinCorrectas.push(1);
+                            return true;
+                        }
+                        if (anticipos == true) {
+                            return true;
+                        };
+                    };
+                });
+                document.addEventListener("touchend", function (event) {
+                    console.log('touchend')
+                    touchend = true;
+                });
+                // ----------------------------------------------------------------------------------------------------------------------------------
+
+                var interval = setInterval(function () {
+                    if (aviso == false && touchend == true) {
+                        console.log('Respuestas----------------------------------------------')
+                        if (listening == true && anticipos == true) {
+                            RespuestasAnticipadas.push(1);
+                            console.log('RespuestaAnticipada');
+                            timesRun = timesRun + 1;
+                        } else if (listening == true && colorCorrecto == true) {
+                            tiempoDeRespuestasArray.push(loopRespuestasArray[loopRespuestasArray.length - 1]);
+                            console.log('TiempoDeRespuestas: ' + tiempoDeRespuestasArray);
+                            timesRun = timesRun + 1;
+                        } else if (listening == true && colorCorrecto == false) {
+                            respuestasinCorrectas.push(loopRespuestasinCorrectas[loopRespuestasinCorrectas.length - 1]);
+                            console.log('RespuestasinCorrectas: ' + respuestasinCorrectas);
+                            timesRun = timesRun + 1;
+                        } else if (estadoNegro == false && colorChoose !== app.color && juego == true) {
+                            loopRespuestasOmitidasCorrectas.push(1);
+                            console.log('RespuestasOmitidasCorrectas: ' + loopRespuestasOmitidasCorrectas);
+                            timesRun = timesRun + 1;
+                        } else if (estadoNegro == false && colorChoose == app.color && juego == true) {
+                            loopRespuestasOmitidasIncorrectas.push(1);
+                            console.log('RespuestasOmitidasIncorrectas: ' + loopRespuestasOmitidasIncorrectas);
+                            timesRun = timesRun + 1;
+                        }
+                        console.log('Ciclo número: ' + timesRun);
+                    };
+                    if (timesRun == numeroDeimagenes + 1) {
+                        clearInterval(interval);
+                        $("#circulo").css("background-color", "black");
+                        var sumaRespuestasOmitidasCorrectas = 0;
+                        var sumaRespuestasOmitidasinCorrectas = 0;
+                        var sumaRespuestasAnticipadas = 0;
+                        var sumaRespuestasIncorrectas = 0;
+                        loopRespuestasOmitidasCorrectas.forEach(function (element) {
+                            sumaRespuestasOmitidasCorrectas = sumaRespuestasOmitidasCorrectas + element;
+                        })
+                        loopRespuestasOmitidasIncorrectas.forEach(function (element) {
+                            sumaRespuestasOmitidasinCorrectas = sumaRespuestasOmitidasinCorrectas + element;
+                        })
+                        RespuestasAnticipadas.forEach(function (element) {
+                            sumaRespuestasAnticipadas = sumaRespuestasAnticipadas + element;
+                        })
+                        respuestasinCorrectas.forEach(function (element) {
+                            sumaRespuestasIncorrectas = sumaRespuestasIncorrectas + element;
+                        })
+                        console.log("Respuestas anticipadas: " + sumaRespuestasAnticipadas);
+                        console.log('El tiempo de respuesta: ' + tiempoDeRespuestasArray);
+                        console.log('El numero de respuestas incorrectas: ' + respuestasinCorrectas);
+                        console.log("El numero de respuestas omitidas correctas es: " + sumaRespuestasOmitidasCorrectas);
+                        console.log("El numero de respuestas omitidas incorrectas es: " + sumaRespuestasOmitidasinCorrectas);
+                        // -----------------------
+
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.open("POST", '/');
+                        xhttp.setRequestHeader("Content-type", 'application/json');
+                        var datos = {
+                            respuestasAnticipadas: sumaRespuestasAnticipadas,
+                            tiempoDeRespuestas: tiempoDeRespuestasArray,
+                            numeroDeRespuestasCorrectas: tiempoDeRespuestasArray.length + sumaRespuestasOmitidasCorrectas,
+                            numeroDeRespuestasIncorrectas: sumaRespuestasIncorrectas,
+                            respuestasOmitidasCorrectas: sumaRespuestasOmitidasCorrectas,
+                            respuestasOmitidasinCorrectas: sumaRespuestasOmitidasinCorrectas,
+                            nombre: Nombre,
+                            apellido: Apellido,
+                            edad: Edad,
+                            gSanguineo: GSanguineo,
+                            numeroDeimagenes: numeroDeimagenes,
+                            nombrePrueba: NombrePrueba
+                        };
+                        xhttp.send(JSON.stringify(datos));
+                        xhttp.onreadystatechange = function () {
+                            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                                console.log(xhttp.response);
+                                $('#form').submit();
+                            }
+                        };
+                    };
+                    juego = true;
+                    estadoColor = false;
+                    estadoNegro = false;
+                    listening = false;
+                    anticipos = false;
+                    app.cambiarNegro();
+                }, tiempoDeFondo + tiempoDeImg);
+            } else {
+                alert("Por favor reinicie la página, existe una nueva configuración");
             };
-            juego = true;
-            estadoColor = false;
-            estadoNegro = false;
-            listening = false;
-            anticipos = false;
-            app.cambiarNegro();
-        }, tiempoDeFondo + tiempoDeImg);
+        });
     }
 }
