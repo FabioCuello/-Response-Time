@@ -16,10 +16,10 @@ app.set("view engine", "ejs");
 // --------------------------------------------------------
 const pool = mysql.createPool({
     connectionLimit: 50,
-    host: 'db4free.net',
-    user: "pilotodb2",
-    password: "pilotodb123",
-    database: "pilotopruebadb2",
+    host: YOURHOST,
+    user: YOURUSER,
+    password: YOURPASSWORD,
+    database: YOURDATABASE,
 });
 
 //------------------------------------------- "/" route---------------------------------------
